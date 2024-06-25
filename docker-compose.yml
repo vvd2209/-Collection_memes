@@ -1,0 +1,39 @@
+version: '3.11'
+
+services:
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: memes_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  minio:
+    image: minio/minio
+    environment:
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_SECRET_KEY: minioadmin
+    command: server /data
+    ports:
+      - "9000:9000"
+    volumes:
+      - minio_data:/data
+
+  meme_api:
+    build: .
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+    volumes:
+      - ./app:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - minio
+
+volumes:
+  postgres_data:
+  minio_data:
