@@ -13,7 +13,7 @@
 2. Запустите сервисы с помощью Docker Compose командой - docker-compose build.
 3. Запустите сервер командой - uvicorn app.main:app --reload .
 4. API будет доступно по адресу: http://localhost:8000.
-5. Для запуска тестов используйте команду - pytest.
+5. Для запуска тестов используйте команду - python -m pytest.
 6. Документация API доступна по адресу http://127.0.0.1:8000/docs.
 ### Docker
 Для создания образа из Dockerfile запустите команду **docker-compose build**
